@@ -1,16 +1,15 @@
 import bcrypt from "bcrypt";
 import User from "../../models/user.model.js";
+import { errorHandler } from "../../../utils/error.js";
 
-export const signUpUser = async (req, res) => {
+export const signUpUser = async (req, res, next) => {
   console.log("Entered signup function");
   try {
     const { username, email, password } = req.body;
 
     if ((!username, !email, !password)) {
-      return res.status(400).json({
-        success: false,
-        message: "username , email , passwords all are required fields",
-      });
+      //TODO: We calls the custom error handler
+      next(errorHandler(400, "All Fields are required"));
     }
 
     const existingUser = await User.findOne({
@@ -38,6 +37,6 @@ export const signUpUser = async (req, res) => {
       data: user,
     });
   } catch (error) {
-    console.error("Error when sign up a new user", error);
+    next();
   }
 };
