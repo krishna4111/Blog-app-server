@@ -18,6 +18,11 @@ app.get("/", (req, res) => {
   res.send("Blog app is running ");
 });
 
+app.use((req, res, next) => {
+  console.log("entered the server ====>", req.url);
+  next();
+});
+
 app.use("/api", routes);
 
 app.listen(PORT, () => {
