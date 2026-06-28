@@ -3,11 +3,13 @@ dotenv.config();
 import express from "express";
 import connectToDb from "./config/db.config.js";
 import routes from "./routes/index.js";
+import cors from "cors";
 
 const app = express();
 const PORT = process.env.PORT || 4500;
 
 app.use(express.json());
+app.use(cors());
 
 (() => {
   console.log("it is triggered");
